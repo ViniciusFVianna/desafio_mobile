@@ -1,6 +1,7 @@
 import 'package:desafio_mobile/utililities/constant_string.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
@@ -18,6 +19,12 @@ await Firebase.initializeApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
+      theme: ThemeData(
+        appBarTheme: const  AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
+        primaryColorDark: Colors.teal[800],
+        primaryColorLight: Colors.teal[400],
+        primaryColor: Colors.teal,
+      ),
     ),
   );
 }

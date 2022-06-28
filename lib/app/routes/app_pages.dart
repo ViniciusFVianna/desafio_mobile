@@ -10,7 +10,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.home;
+  static const initial = Routes.session;
 
   static final routes = [
     GetPage(
@@ -19,7 +19,7 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
-      name: _Paths.SESSION,
+      name: _Paths.session,
       page: () => const SessionView(),
       binding: SessionBinding(),
     ),

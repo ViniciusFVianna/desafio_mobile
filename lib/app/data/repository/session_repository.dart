@@ -48,23 +48,26 @@ class SessionRepository{
     firebaseUserUid = fUser.uid;
     CollectionReference cUser = FirebaseFirestore.instance.collection(ConstantString.userEndpoint);
 
+    String? token; 
+   await fUser.getIdToken().then((value) => token = value);
+
    QuerySnapshot? user;
     await FirebaseFirestore.instance
         .collection(ConstantString.userEndpoint)
         .where("uId", isEqualTo: firebaseUserUid)
         .get().then((value) => user = value);
 
-        if(user != null && user!.docs.isNotEmpty && user?.docs.first.get('uId') != fUser.uid){
+        if(user != null && user!.docs.isEmpty){
            cUser.doc(firebaseUserUid)
             .set({
               'uId' : firebaseUserUid,
-              'token': fUser.refreshToken ?? '',
+              'token': token ?? fUser.refreshToken,
               'nome': fUser.displayName ?? '',
               'email': fUser.email ?? '',
               'login': fUser.email ?? '',
               'urlFoto': fUser.photoURL ?? '',
               'rule': ''
-            }).then((value) => log("User Added"))
+            }).then((value) => log("User Added : ${user?.docs.first.data()}"))
                 .catchError((error) => log("Failed to add user: $error"));
         }else{
           cUser.doc(firebaseUserUid)
@@ -77,7 +80,7 @@ class SessionRepository{
           'urlFoto': user?.docs.first.get('urlFoto') ?? '',
           'rule': user?.docs.first.get('rule') ?? ''
         })
-        .then((value) => log("User Updated"))
+        .then((value) => log("User Updated : ${user?.docs.first.data()}"))
         .catchError((error) => log("Failed to update user: $error"));
 
         final userModel = UserModel(
@@ -91,18 +94,6 @@ class SessionRepository{
           );
       userModel.save();
         }
-
-    // cUser.doc(firebaseUserUid)
-    // .set({
-    //   'uId' : firebaseUserUid,
-    //   'token': fUser.refreshToken ?? '',
-    //   'nome': fUser.displayName ?? '',
-    //   'email': fUser.email ?? '',
-    //   'login': fUser.email ?? '',
-    //   'urlFoto': fUser.photoURL ?? '',
-    //   'rule': ''
-    // }).then((value) => log("User Added"))
-    //     .catchError((error) => log("Failed to add user: $error"));
   } 
 
     void updateUser(User fUser) async {
