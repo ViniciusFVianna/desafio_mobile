@@ -100,6 +100,7 @@ class HomeController extends GetxController {
       );
 
       _repository.updateUser(user);
+      user.save();
     });
 
   }

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:desafio_mobile/utilities/prefs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import '../../../utilities/constant_string.dart';
 import '../../../utilities/error_response.dart';
@@ -13,6 +14,7 @@ import '../models/user_model.dart';
 class SessionRepository{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late String firebaseUserUid;
+  final FirebaseCrashlytics crashlytics = FirebaseCrashlytics.instance;
 
   Future<Either<ErrorResponse, bool>> session({required SessionRequest request}) async {
     try{
@@ -20,7 +22,10 @@ class SessionRepository{
       UserCredential result = await _auth.signInWithEmailAndPassword(
             email: request.email.toString(), 
             password: request.password.toString(),
-      );
+      ).catchError((error){
+        crashlytics.setCustomKey("${ConstantString.appName}/$firebaseUserUid", error);
+        crashlytics.recordError(error, null);
+      });
       
       final User fUser = result.user!;
       // Cria um usuario do app
@@ -68,7 +73,11 @@ class SessionRepository{
               'urlFoto': fUser.photoURL ?? '',
               'rule': ''
             }).then((value) => log("User Added : ${user?.docs.first.data()}"))
-                .catchError((error) => log("Failed to add user: $error"));
+                .catchError((error) {
+             crashlytics.setCustomKey("${ConstantString.appName}/$firebaseUserUid", "Failed to add user: $error");
+             crashlytics.recordError(error, null);
+                  log("Failed to add user: $error");
+                });
         }else{
           cUser.doc(firebaseUserUid)
             .update( {
@@ -81,7 +90,11 @@ class SessionRepository{
           'rule': user?.docs.first.get('rule') ?? ''
         })
         .then((value) => log("User Updated : ${user?.docs.first.data()}"))
-        .catchError((error) => log("Failed to update user: $error"));
+        .catchError((error) {
+            crashlytics.setCustomKey("${ConstantString.appName}/$firebaseUserUid", "Failed to update user: $error");
+            crashlytics.recordError(error, null);
+          log("Failed to update user: $error");
+        });
 
         final userModel = UserModel(
           uId : user?.docs.first.get('uId'),
@@ -110,7 +123,11 @@ class SessionRepository{
       'rule': ''
     })
         .then((value) => log("User Updated"))
-        .catchError((error) => log("Failed to update user: $error"));
+        .catchError((error) {
+      crashlytics.setCustomKey("${ConstantString.appName}/$firebaseUserUid", "Failed to update user: $error");
+      crashlytics.recordError(error, null);
+          log("Failed to update user: $error");
+        });
   }
 
 

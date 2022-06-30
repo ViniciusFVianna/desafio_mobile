@@ -2,6 +2,7 @@ import 'package:desafio_mobile/app/data/models/user_model.dart';
 import 'package:desafio_mobile/utilities/constant_string.dart';
 import 'package:desafio_mobile/utilities/prefs.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,6 +16,7 @@ void main() async {
 await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
 );
+   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
  final user = await UserModel.get();
  final prefsUser = await Prefs.getString(ConstantString.authPrefs);

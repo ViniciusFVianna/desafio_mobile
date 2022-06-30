@@ -17,6 +17,7 @@ class HomeView extends GetView<HomeController> {
               fontSize: 19,
               fontWeight: FontWeight.w700
           ),),
+        leading: Container(),
         leadingWidth: 0,
       ),
       body: Obx(() => SizedBox(
