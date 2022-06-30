@@ -1,6 +1,8 @@
+import 'package:desafio_mobile/utililities/constant_string.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -10,13 +12,27 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
+        title: const Text(ConstantString.appName,
+          style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.w700
+          ),),
       ),
-      body: const Center(
-        child: Text(
-          'HomeView is working',
-          style: TextStyle(fontSize: 20),
+      body: Obx(() => SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: GoogleMap(
+          initialCameraPosition: controller.cameraPosition.value,
+          onMapCreated: controller.onMapCreated,
+          zoomGesturesEnabled: true,
+          compassEnabled: true,
+          myLocationButtonEnabled: true,
+          myLocationEnabled: true,
+          zoomControlsEnabled: true,
+          mapType: MapType.normal,
+          markers: Set.of({controller.marker.value}),
+            onTap: (latlng) => controller.latlng.value = latlng,
+            ),
         ),
       ),
     );

@@ -1,4 +1,6 @@
+import 'package:desafio_mobile/app/data/models/user_model.dart';
 import 'package:desafio_mobile/utililities/constant_string.dart';
+import 'package:desafio_mobile/utililities/prefs.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,11 +15,18 @@ void main() async {
 await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
 );
+
+ final user = await UserModel.get();
+ final prefsUser = await Prefs.getString(ConstantString.authPrefs);
+
   runApp(
     GetMaterialApp(
       title: ConstantString.appName,
       debugShowCheckedModeBanner: false,
-      initialRoute: AppPages.initial,
+      initialRoute: user.uId != null
+      && prefsUser.isNotEmpty
+      ? Routes.home
+      : AppPages.initial,
       getPages: AppPages.routes,
       theme: ThemeData(
         appBarTheme: const  AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),

@@ -34,6 +34,7 @@ class SessionFrom extends StatelessWidget {
             const SizedBox(height: 8),
             TextFormField(
               controller: controller.txtEmail.value,
+              key: const Key('txtEmail'),
               keyboardType: TextInputType.emailAddress,
               cursorColor: Theme.of(Get.context!).primaryColorLight,
               validator: controller.validateEmail,
@@ -70,6 +71,7 @@ class SessionFrom extends StatelessWidget {
             const SizedBox(height: 8),
             TextFormField(
               controller: controller.txtPassword.value,
+              key: const Key('txtPwd'),
               keyboardType: TextInputType.visiblePassword,
               obscureText: !controller.showPassword.value,
               cursorColor: Theme.of(Get.context!).primaryColorLight,
@@ -130,6 +132,7 @@ class SessionFrom extends StatelessWidget {
             child: Container(),
             ))
             : ElevatedButton(
+              key: const Key('onEnter'),
               onPressed: controller.isLoading.value
             ? null
             : () async => await controller.onSession(onSuccess: ()=> Get.toNamed(Routes.home)),
