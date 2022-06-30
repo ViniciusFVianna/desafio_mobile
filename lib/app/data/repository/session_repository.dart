@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:desafio_mobile/utililities/prefs.dart';
+import 'package:desafio_mobile/utilities/prefs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../utililities/constant_string.dart';
-import '../../../utililities/error_response.dart';
+import '../../../utilities/constant_string.dart';
+import '../../../utilities/error_response.dart';
 import '../models/session_request.dart';
 import '../models/user_model.dart';
 

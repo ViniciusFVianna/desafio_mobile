@@ -1,4 +1,4 @@
-import 'package:desafio_mobile/utililities/constant_string.dart';
+import 'package:desafio_mobile/utilities/constant_string.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -17,6 +17,7 @@ class HomeView extends GetView<HomeController> {
               fontSize: 19,
               fontWeight: FontWeight.w700
           ),),
+        leadingWidth: 0,
       ),
       body: Obx(() => SizedBox(
           height: double.infinity,
@@ -31,7 +32,6 @@ class HomeView extends GetView<HomeController> {
           zoomControlsEnabled: true,
           mapType: MapType.normal,
           markers: Set.of({controller.marker.value}),
-            onTap: (latlng) => controller.latlng.value = latlng,
             ),
         ),
       ),

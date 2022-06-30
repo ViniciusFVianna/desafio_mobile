@@ -1,8 +1,7 @@
 import 'dart:convert' as convert;
 
-import 'package:desafio_mobile/utililities/prefs.dart';
-
-import '../../../utililities/constant_string.dart';
+import '../../../utilities/constant_string.dart';
+import '../../../utilities/prefs.dart';
 
 class UserModel {
   String? uId;
@@ -12,6 +11,8 @@ class UserModel {
   String? urlFoto;
   String? token;
   String? roles;
+  double? latitude;
+  double? longetude;
 
   UserModel({
     this.uId,
@@ -20,7 +21,9 @@ class UserModel {
     this.email,
     this.urlFoto,
     this.token,
-    this.roles
+    this.roles,
+    this.latitude,
+    this.longetude,
         });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +34,8 @@ class UserModel {
     urlFoto = json['urlFoto'] ?? '';
     token = json['token'] ?? '';
     roles = json['roles'] ?? '';
+    latitude = json['latitude'] ?? 0.0;
+    longetude = json['longetude'] ?? 0.0;
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +47,8 @@ class UserModel {
     data['urlFoto'] = urlFoto;
     data['token'] = token;
     data['roles'] = roles;
+    data['latutude'] = latitude;
+    data['longetude'] = longetude;
     return data;
   }
 
@@ -69,7 +76,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'Usuario{uId: $uId, login: $login, nome: $nome, email: $email, urlFoto: $urlFoto, token: $token, roles: $roles}';
+    return 'Usuario{uId: $uId, login: $login, nome: $nome, email: $email, urlFoto: $urlFoto, token: $token, roles: $roles, latitude: $latitude, longetude: $longetude}';
   }
 
 

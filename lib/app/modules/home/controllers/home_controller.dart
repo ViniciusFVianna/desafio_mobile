@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:desafio_mobile/app/data/models/user_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -41,8 +42,9 @@ class HomeController extends GetxController {
                 target: latlng.value,
                 zoom: 14.4746,
               )));
-
+      updateUser();
     });
+
     super.onInit();
   }
 
@@ -83,4 +85,22 @@ class HomeController extends GetxController {
       return position;
   }
 
+  void updateUser()  {
+    UserModel.get().then((value) {
+      UserModel user = UserModel(
+        uId: value.uId,
+        nome: value.nome,
+        login: value.login,
+        email: value.email,
+        token: value.token,
+        roles: value.roles,
+        urlFoto: value.urlFoto,
+        latitude: latitude.value,
+        longetude: longitude.value,
+      );
+
+      _repository.updateUser(user);
+    });
+
+  }
 }

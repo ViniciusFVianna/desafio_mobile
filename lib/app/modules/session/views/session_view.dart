@@ -1,5 +1,5 @@
 import 'package:desafio_mobile/app/modules/session/views/session_form.dart';
-import 'package:desafio_mobile/utililities/constant_string.dart';
+import 'package:desafio_mobile/utilities/constant_string.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
