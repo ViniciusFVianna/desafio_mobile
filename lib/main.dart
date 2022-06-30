@@ -1,6 +1,7 @@
 import 'package:desafio_mobile/app/data/models/user_model.dart';
 import 'package:desafio_mobile/utilities/constant_string.dart';
 import 'package:desafio_mobile/utilities/prefs.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
