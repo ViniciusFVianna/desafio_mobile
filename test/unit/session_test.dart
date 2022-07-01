@@ -4,16 +4,19 @@ import 'package:desafio_mobile/main.dart' as app;
 import 'package:integration_test/integration_test.dart';
 
  void main() {
+   app.main();
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 group('Test SessionController', (){
-  app.main();
+
   test('Campo de email conter email@email.com', () {
+    app.main();
       final controller = SessionController();
       controller.txtEmail.value.text = 'teste@teste.com';
       expect(controller.txtEmail.value.text, 'teste@teste.com');
   });
 
   test('Campo de senha conter Te123!@#', () {
+    app.main();
       final controller = SessionController();
       controller.txtPassword.value.text = 'Te123!@#';
       expect(controller.txtEmail.value.text, 'Te123!@#');
