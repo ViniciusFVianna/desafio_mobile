@@ -32,10 +32,10 @@ class SessionRepository{
         }
       ))
           .catchError((error){
-        crashlytics.setCustomKey("${ConstantString.appName}/$firebaseUserUid", error);
+        crashlytics.setCustomKey(ConstantString.appName, error);
         crashlytics.recordError(error, null);
       });
-      
+
       final User fUser = result.user!;
       // Cria um usuario do app
       final user = UserModel(
@@ -48,7 +48,7 @@ class SessionRepository{
       );
       user.save();
 
-       // Salva no Firestore
+      // Salva no Firestore
       saveUser(fUser);
 
       return right(true);
